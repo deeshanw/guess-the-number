@@ -1,0 +1,70 @@
+<html>
+  <head>
+    <title>Guess the Number</title>
+    <script type='text/javascript' src='http://code.jquery.com/jquery-1.11.3.min.js'></script>
+  </head>
+  <body>
+    <div>
+      <h3>Play!</h3>
+      <div class='prompt'></div>
+      <div class='last-guess'></div>
+      <div class='status'></div>
+      <label for='guess'>Guess: </label>
+      <input type='text' name='guess'></input>
+      <button name='attempt'>Make guess</button>
+    </div>
+    <h3>Game Config</h3>
+    <div>
+      <div>
+        <label for='lower'>Lower bound: </label>
+        <input type='text' name='lower'></input>
+      </div>
+      <div>
+        <label for='upper'>Upper bound: </label>
+        <input type='text' name='upper'></input>
+      </div>
+      <button name='reset'>Reset</button>
+    </div>
+    <script type='text/javascript'>
+      var lower = 1;
+      var upper = 10;
+      var number;
+      var lastGuess;
+      var prompt;
+      $('button[name="reset"]').on('click', reset);
+      $('button[name="attempt"]').on('click', guess);
+      function reset() {
+        lower = $('input[name="lower"]').val();
+        upper = $('input[name="upper"]').val();
+        number = randInt(lower, upper);
+        lastGuess = 'none';
+        prompt = 'Guess the number between ' + lower + ' and ' + upper;
+        status = '';
+        render();
+      }
+      function guess() {
+        lastGuess = $('input[name="guess"]').val();
+        if(lastGuess > number) {
+          status = 'Nope. Lower';
+        } else if(lastGuess < number) {
+          status = 'Nope. Higher';
+        } else {
+          status = 'You got it!';
+        }
+        render();
+      }
+      function render() {
+        $('.status').html(status);
+        $('.prompt').html(prompt);
+        $('.last-guess').html('Last guess: ' + lastGuess);
+      }
+      function randInt(lower, upper) {
+        var range = upper - lower;
+        return Math.trunc((Math.random() * range) + lower);
+      }
+      $('input[name="lower"]').val(lower);
+      $('input[name="upper"]').val(upper);
+      reset();
+    </script>
+  </body>
+</html>
