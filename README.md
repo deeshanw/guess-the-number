@@ -1,4 +1,4 @@
-## Available Scripts
+## nGuess The Number - Available Scripts
 
 In the project directory, you can run:
 
